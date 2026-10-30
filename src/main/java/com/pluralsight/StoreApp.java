@@ -21,13 +21,12 @@ public class StoreApp {
             String input = scanner.nextLine();
 
             int id = Integer.parseInt(input);
-            try {
-                Product matchedProduct = inventory.get(id);
+            Product matchedProduct = inventory.get(id);
+            if (matchedProduct == null) {
+                System.out.println("We don't carry that product");
+            } else {
                 System.out.printf("We carry %s and the price is $%.2f%n",
                         matchedProduct.getName(), matchedProduct.getPrice());
-
-            } catch (NullPointerException e) {
-                System.out.println("We don't carry that product");
             }
 
             System.out.print("Do you want to search again? (yes/no): ");

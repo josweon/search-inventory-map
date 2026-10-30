@@ -1,5 +1,8 @@
 package com.pluralsight;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -23,6 +26,25 @@ public class StoreApp {
     }
 
     private static void loadInventory() {
-        System.out.println("exists");
+        try {
+            BufferedReader bufReader = new BufferedReader(new FileReader("src/main/resources/inventory.csv"));
+            bufReader.readLine();
+
+            String input;
+            while ((input = bufReader.readLine()) != null) {
+                String[] tokens = input.split("\\|");
+
+                int id = Integer.parseInt(tokens[0]);
+                String name = tokens[1];
+                float price = Float.parseFloat(tokens[2]);
+                Product product = new Product(id,name,price);
+
+                inventory.put(id, product);
+            }
+            bufReader.close();
+
+        } catch (IOException e){
+            System.out.println("ERROR: Invalid IO Stream " + e.getMessage());
+        }
     }
 }
